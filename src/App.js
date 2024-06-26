@@ -1,22 +1,18 @@
-// import logo from './logo.svg';
-// import './App.css';
-import Home from './Pages/Home'
-import About from './Pages/About';
-import Blog from './Pages/Blog';
-import Contact from './Pages/contact';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import logo from "./logo.svg";
+import "./App.css";
+import UseReducerHookEx from "./UseReducerHookEx";
+import { useSelector } from "react-redux";
+import Home from "./Home";
+
 function App() {
+  const sir = useSelector(state => state.xyz)
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={< Home />} />
-          <Route path="/About" element={< About />} />
-          <Route path="/Blog" element={< Blog />} />
-          <Route path="/Contact" element={< Contact />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <div className="App">
+      <h1 style={{ color: 'red' }}>This is example redux</h1>
+      <h1 style={{ color: 'bule' }}> {sir} </h1>
+      <Home />
+      {/* <UseReducerHookEx/> */}
+    </div>
   );
 }
 
