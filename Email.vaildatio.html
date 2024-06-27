@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Email Validation</h2>
+        <input type="text" id="emailInput" placeholder="Enter your email">
+        <button onclick="validateEmail()">Validate</button>
+        <p id="errorText"></p>
+    </div>
+
+    <script>
+        function validateEmail() {
+            const email = document.getElementById('emailInput').value;
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (regex.test(email)) {
+                document.getElementById('errorText').innerText = '';
+                alert('Email is valid!');
+            } else {
+                document.getElementById('errorText').innerText = 'Please enter a valid email address';
+            }
+        }
+    </script>
+</body>
+
+</html>

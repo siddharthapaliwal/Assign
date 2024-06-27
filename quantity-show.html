@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculate Subtotal Price</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Calculate Subtotal Price</h2>
+        <form id="priceForm">
+            <input type="number" id="unitPrice" placeholder="Unit Price" step="0.01">
+            <input type="number" id="quantity" placeholder="Quantity">
+            <input type="text" id="subtotal" placeholder="Subtotal" readonly>
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('priceForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            calculateSubtotal();
+        });
+
+        document.getElementById('unitPrice').addEventListener('input', calculateSubtotal);
+        document.getElementById('quantity').addEventListener('input', calculateSubtotal);
+
+        function calculateSubtotal() {
+            const unitPrice = parseFloat(document.getElementById('unitPrice').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const subtotalField = document.getElementById('subtotal');
+
+            if (!isNaN(unitPrice) && !isNaN(quantity)) {
+                const subtotal = unitPrice * quantity;
+                subtotalField.value = subtotal.toFixed(2);
+            } else {
+                subtotalField.value = '';
+            }
+        }
+        const http = require('http');
+        const fs = require('fs');
+        const path = require('path');
+
+        const hostname = '127.0.0.1';
+        const port = 3000;
+
+        const server = http.createServer((req, res) => {
+            if (req.url === '/' || req.url === '/index.html') {
+                fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+                    if (err) {
+                        res.writeHead(500, { 'Content-Type': 'text/plain' });
+                        res.end('500 - Internal Server Error');
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'text/html' });
+                        res.end(data);
+                    }
+                });
+            } else {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('404 - Not Found');
+            }
+        });
+
+        server.listen(port, hostname, () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+        });
+    </script>
+</body>
+
+</html>

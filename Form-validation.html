@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form with Advanced Validations</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 50px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <input type="text" id="name" placeholder="Name">
+            <div class="error" id="nameError"></div>
+
+            <input type="email" id="email" placeholder="Email">
+            <div class="error" id="emailError"></div>
+
+            <input type="password" id="password" placeholder="Password">
+            <div class="error" id="passwordError"></div>
+
+            <input type="number" id="age" placeholder="Age">
+            <div class="error" id="ageError"></div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            validateForm();
+        });
+
+        function validateForm() {
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value.trim();
+            var age = document.getElementById('age').value.trim();
+
+            var nameError = document.getElementById('nameError');
+            var emailError = document.getElementById('emailError');
+            var passwordError = document.getElementById('passwordError');
+            var ageError = document.getElementById('ageError');
+
+            nameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            ageError.textContent = '';
+
+            var isValid = true;
+
+            if (!validateName(name)) {
+                nameError.textContent = 'Name must be at least 3 characters long';
+                isValid = false;
+            }
+
+            if (!validateEmail(email)) {
+                emailError.textContent = 'Invalid email address';
+                isValid = false;
+            }
+
+            if (!validatePassword(password)) {
+                passwordError.textContent = 'Password must be at least 6 characters, include an uppercase letter, a number, and a special character';
+                isValid = false;
+            }
+
+            if (!validateAge(age)) {
+                ageError.textContent = 'Age must be a number between 18 and 100';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+            }
+        }
+
+        function validateName(name) {
+            return name.length >= 3;
+        }
+
+        function validateEmail(email) {
+            var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            var re = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            return re.test(password);
+        }
+
+        function validateAge(age) {
+            var ageNumber = parseInt(age);
+            return ageNumber >= 18 && ageNumber <= 100;
+        }
+        const http = require('http');
+        const fs = require('fs');
+        const path = require('path');
+
+        const hostname = '127.0.0.1';
+        const port = 3000;
+
+        const server = http.createServer((req, res) => {
+            if (req.url === '/' || req.url === '/index.html') {
+                fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+                    if (err) {
+                        res.writeHead(500, { 'Content-Type': 'text/plain' });
+                        res.end('500 - Internal Server Error');
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'text/html' });
+                        res.end(data);
+                    }
+                });
+            } else {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('404 - Not Found');
+            }
+        });
+
+        server.listen(port, hostname, () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+        });
+
+    </script>
+</body>
+
+</html>

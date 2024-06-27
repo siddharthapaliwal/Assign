@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+
+        .filters {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .filters label {
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Editor</h1>
+        <input type="file" id="uploadInput" accept="image/*">
+        <div class="filters">
+            <label for="brightness">Brightness:</label>
+            <input type="range" id="brightness" min="0" max="200" value="100">
+            <label for="contrast">Contrast:</label>
+            <input type="range" id="contrast" min="0" max="200" value="100">
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+        <canvas id="editorCanvas"></canvas>
+    </div>
+    <script>
+        let originalImage = null;
+        let filteredImage = null;
+        const canvas = document.getElementById('editorCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Handle image upload
+        document.getElementById('uploadInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const img = new Image();
+                img.onload = function () {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    originalImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    filteredImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                };
+                img.src = event.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // Apply filters function
+        function applyFilters() {
+            const brightnessValue = parseInt(document.getElementById('brightness').value);
+            const contrastValue = parseInt(document.getElementById('contrast').value);
+
+            if (originalImage) {
+                // Apply brightness
+                for (let i = 0; i < originalImage.data.length; i += 4) {
+                    filteredImage.data[i] = originalImage.data[i] + (brightnessValue * 2.55 - 255);
+                    filteredImage.data[i + 1] = originalImage.data[i + 1] + (brightnessValue * 2.55 - 255);
+                    filteredImage.data[i + 2] = originalImage.data[i + 2] + (brightnessValue * 2.55 - 255);
+                }
+
+                // Apply contrast
+                const factor = (259 * (contrastValue + 255)) / (255 * (259 - contrastValue));
+                for (let i = 0; i < filteredImage.data.length; i += 4) {
+                    filteredImage.data[i] = factor * (filteredImage.data[i] - 128) + 128;
+                    filteredImage.data[i + 1] = factor * (filteredImage.data[i + 1] - 128) + 128;
+                    filteredImage.data[i + 2] = factor * (filteredImage.data[i + 2] - 128) + 128;
+                }
+
+                // Draw filtered image onto canvas
+                ctx.putImageData(filteredImage, 0, 0);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form with Validations</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <input type="text" id="name" placeholder="Name">
+            <div class="error" id="nameError"></div>
+
+            <input type="email" id="email" placeholder="Email">
+            <div class="error" id="emailError"></div>
+
+            <input type="password" id="password" placeholder="Password">
+            <div class="error" id="passwordError"></div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            var nameError = document.getElementById('nameError');
+            var emailError = document.getElementById('emailError');
+            var passwordError = document.getElementById('passwordError');
+
+            nameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+
+            var isValid = true;
+
+            if (name.trim() === '') {
+                nameError.textContent = 'Name is required';
+                isValid = false;
+            }
+
+            if (email.trim() === '') {
+                emailError.textContent = 'Email is required';
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                emailError.textContent = 'Email is not valid';
+                isValid = false;
+            }
+
+            if (password.trim() === '') {
+                passwordError.textContent = 'Password is required';
+                isValid = false;
+            } else if (password.length < 6) {
+                passwordError.textContent = 'Password must be at least 6 characters long';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+            }
+        });
+
+        function validateEmail(email) {
+            var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            return re.test(email);
+        }
+        const http = require('http');
+        const fs = require('fs');
+        const path = require('path');
+
+        const hostname = '127.0.0.1';
+        const port = 3000;
+
+        const server = http.createServer((req, res) => {
+            if (req.url === '/' || req.url === '/index.html') {
+                fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+                    if (err) {
+                        res.writeHead(500, { 'Content-Type': 'text/plain' });
+                        res.end('500 - Internal Server Error');
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'text/html' });
+                        res.end(data);
+                    }
+                });
+            } else {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('404 - Not Found');
+            }
+        });
+
+        server.listen(port, hostname, () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+        });
+
+    </script>
+</body>
+
+</html>

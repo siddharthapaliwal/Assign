@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Random Quote Generator</h2>
+        <p id="quote"></p>
+        <button onclick="generateQuote()">Generate Quote</button>
+    </div>
+
+    <script>
+        // Array of quotes
+        const quotes = [
+            "The greatest glory in living lies not in never falling, but in rising every time we fall. - Nelson Mandela",
+            "The way to get started is to quit talking and begin doing. - Walt Disney",
+            "Your time is limited, so don't waste it living someone else's life. - Steve Jobs",
+            "If life were predictable it would cease to be life, and be without flavor. - Eleanor Roosevelt",
+            "Spread love everywhere you go. Let no one ever come to you without leaving happier. - Mother Teresa",
+            "Tell me and I forget. Teach me and I remember. Involve me and I learn. - Benjamin Franklin",
+            "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart. - Helen Keller"
+        ];
+
+        function generateQuote() {
+            const randomNumber = Math.floor(Math.random() * quotes.length);
+            const quoteElement = document.getElementById('quote');
+            quoteElement.textContent = quotes[randomNumber];
+        }
+    </script>
+</body>
+
+</html>

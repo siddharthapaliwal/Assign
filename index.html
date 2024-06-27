@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple JavaScript Slider</title>
+    <style>
+        .slider-container {
+            width: 300px;
+            height: 20px;
+            background-color: #ddd;
+            position: relative;
+            margin: 100px auto;
+        }
+
+        .slider {
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-container" id="slider-container">
+        <div class="slider" id="slider"></div>
+    </div>
+    <p>Value: <span id="value">0</span></p>
+
+    <script>
+        var slider = document.getElementById('slider');
+        var sliderContainer = document.getElementById('slider-container');
+        var valueDisplay = document.getElementById('value');
+        var containerWidth = sliderContainer.offsetWidth;
+        var sliderWidth = slider.offsetWidth;
+
+        slider.onmousedown = function (event) {
+            document.onmousemove = function (event) {
+                var newLeft = event.clientX - sliderContainer.getBoundingClientRect().left - sliderWidth / 2;
+                if (newLeft < 0) newLeft = 0;
+                if (newLeft > containerWidth - sliderWidth) newLeft = containerWidth - sliderWidth;
+
+                slider.style.left = newLeft + 'px';
+                var value = Math.round((newLeft / (containerWidth - sliderWidth)) * 100);
+                valueDisplay.innerText = value;
+            };
+
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        };
+
+        slider.ondragstart = function () {
+            return false;
+        };
+    </script>
+</body>
+
+</html>

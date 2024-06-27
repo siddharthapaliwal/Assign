@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage CRUD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>LocalStorage CRUD Example</h1>
+        <form id="noteForm">
+            <input type="text" id="noteInput" placeholder="Enter a note">
+            <button type="submit">Add Note</button>
+        </form>
+        <ul id="noteList"></ul>
+    </div>
+    <script>
+        // Function to fetch notes from localStorage and display them
+        function fetchNotes() {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            const noteList = document.getElementById('noteList');
+
+            noteList.innerHTML = ''; // Clear existing list items
+
+            notes.forEach((note, index) => {
+                const li = document.createElement('li');
+                li.textContent = note;
+
+                // Add delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.addEventListener('click', () => deleteNote(index));
+
+                li.appendChild(deleteBtn);
+                noteList.appendChild(li);
+            });
+        }
+
+        // Function to add a new note
+        function addNote() {
+            const noteInput = document.getElementById('noteInput');
+            const noteText = noteInput.value.trim();
+
+            if (noteText !== '') {
+                const notes = JSON.parse(localStorage.getItem('notes')) || [];
+                notes.push(noteText);
+                localStorage.setItem('notes', JSON.stringify(notes));
+                fetchNotes(); // Refresh the list
+                noteInput.value = ''; // Clear input field
+            }
+        }
+
+        // Function to delete a note
+        function deleteNote(index) {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes.splice(index, 1);
+            localStorage.setItem('notes', JSON.stringify(notes));
+            fetchNotes(); // Refresh the list
+        }
+
+        // Event listener for form submission
+        document.getElementById('noteForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            addNote();
+        });
+
+        // Initial fetch of notes on page load
+        fetchNotes();
+    </script>
+</body>
+
+</html>

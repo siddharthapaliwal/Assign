@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Logout System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #userPanel p {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Login/Logout System</h1>
+        <div id="loginForm">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+        <div id="userPanel" style="display: none;">
+            <p>Welcome, <span id="loggedInUser"></span>!</p>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <script>
+        // Simulating user authentication with hardcoded credentials
+        const users = [
+            { username: 'user1', password: 'password1', displayName: 'User One' },
+            { username: 'user2', password: 'password2', displayName: 'User Two' },
+            { username: 'user3', password: 'password3', displayName: 'User Three' }
+        ];
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const authenticatedUser = users.find(user => user.username === username && user.password === password);
+
+            if (authenticatedUser) {
+                // Hide login form, show user panel
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('userPanel').style.display = 'block';
+
+                // Display logged in user's name
+                document.getElementById('loggedInUser').textContent = authenticatedUser.displayName;
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        }
+
+        function logout() {
+            // Hide user panel, show login form
+            document.getElementById('userPanel').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+
+            // Clear input fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+    </script>
+</body>
+
+</html>

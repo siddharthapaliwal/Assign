@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Alarm Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .clock {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .time {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        input[type="time"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Simple Alarm Clock</h1>
+        <div class="clock">
+            <div class="time" id="timeDisplay">00:00:00</div>
+            <div class="controls">
+                <label for="alarmTime">Set Alarm:</label>
+                <input type="time" id="alarmTime">
+                <button onclick="setAlarm()">Set</button>
+                <button onclick="clearAlarm()">Clear</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Get current time and update clock every second
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('timeDisplay').textContent = timeString;
+            setTimeout(updateClock, 1000); // Update every second
+        }
+
+        // Set alarm function
+        function setAlarm() {
+            const alarmTime = document.getElementById('alarmTime').value;
+            const [alarmHour, alarmMinute] = alarmTime.split(':');
+            const now = new Date();
+            const nowHour = now.getHours();
+            const nowMinute = now.getMinutes();
+
+            let alarmDate = new Date();
+            alarmDate.setHours(alarmHour);
+            alarmDate.setMinutes(alarmMinute);
+            alarmDate.setSeconds(0);
+
+            const timeToAlarm = alarmDate.getTime() - now.getTime();
+
+            if (timeToAlarm > 0) {
+                setTimeout(() => {
+                    alert('Alarm! It\'s time!');
+                }, timeToAlarm);
+            } else {
+                alert('Please select a future time for the alarm.');
+            }
+        }
+
+        // Clear alarm function
+        function clearAlarm() {
+            document.getElementById('alarmTime').value = '';
+        }
+
+        // Start clock update
+        updateClock();
+    </script>
+</body>
+
+</html>

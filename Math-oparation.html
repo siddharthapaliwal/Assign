@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Math Operations</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 100px auto;
+            text-align: center;
+            border: 1px solid black;
+            padding: 20px;
+            box-shadow: 2px 2px 10px #888888;
+        }
+
+        input {
+            margin-bottom: 10px;
+            width: 80%;
+        }
+
+        button {
+            width: 18%;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Maths Operations</h2>
+        <p>Enter 1st number :</p>
+        <input type="number" id="num1">
+        <p>Enter 2nd number :</p>
+        <input type="number" id="num2">
+        <br>
+        <button onclick="performOperation('+')">+</button>
+        <button onclick="performOperation('-')">-</button>
+        <button onclick="performOperation('*')">*</button>
+        <button onclick="performOperation('/')">/</button>
+        <button onclick="performOperation('%')">%</button>
+        <p>Answer is : <span id="result">0</span></p>
+    </div>
+
+    <script>
+        function performOperation(operator) {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            var result;
+
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Please enter valid numbers");
+                return;
+            }
+
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        alert("Division by zero is not allowed");
+                        return;
+                    }
+                    result = num1 / num2;
+                    break;
+                case '%':
+                    result = num1 % num2;
+                    break;
+                default:
+                    alert("Invalid operator");
+                    return;
+            }
+
+            document.getElementById('result').innerText = result;
+        }
+    </script>
+</body>
+
+</html>

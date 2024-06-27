@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export HTML Table to Excel (CSV)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>Export HTML Table to Excel (CSV)</h2>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td>USA</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@example.com</td>
+                    <td>Canada</td>
+                </tr>
+                <tr>
+                    <td>Alice Johnson</td>
+                    <td>alice.johnson@example.com</td>
+                    <td>UK</td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="exportToExcel()">Export to Excel</button>
+    </div>
+
+    <script>
+        function exportToExcel() {
+            const table = document.getElementById("dataTable");
+            let csv = [];
+            const rows = table.rows;
+
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll("td, th");
+
+                for (let j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(","));
+            }
+
+            // Download CSV file
+            downloadCSV(csv.join("\n"), 'export.csv');
+        }
+
+        function downloadCSV(csv, filename) {
+            let csvFile;
+            let downloadLink;
+
+            // CSV file
+            csvFile = new Blob([csv], { type: "text/csv" });
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+    </script>
+</body>
+
+</html>
