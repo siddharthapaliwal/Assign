@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Js</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f8fb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-header {
+            background-color: #35424a;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .navbar {
+            width: 20%;
+            background-color: #2c3e50;
+            padding: 15px;
+            height: 100vh;
+            overflow: auto;
+            flex-shrink: 0;
+            /* Prevents the navbar from shrinking */
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #1abc9c;
+        }
+
+        #documentation {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        #documentation section {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        #documentation h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        #documentation p {
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .navbar {
+                width: 100%;
+                height: auto;
+                order: -1;
+                /* Moves the navbar to the top */
+            }
+
+            #documentation {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .page-header {
+                padding: 10px 0;
+            }
+
+            .navbar ul {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .navbar ul li a {
+                padding: 8px;
+            }
+
+            #documentation {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="page-header">
+        <h1>React Js</h1>
+    </header>
+    <div class="container">
+        <nav class="navbar">
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#Comonents">Comonents</a></li>
+                <li><a href="#State">State</a></li>
+                <li><a href="#Props">Props</a></li>
+            </ul>
+        </nav>
+        <main id="documentation">
+            <section id="introduction">
+                <h2>Introduction</h2>
+               <p>	React is a powerful JavaScript library for building dynamic and interactive user interfaces (UIs). It is developed by Facebook. React is known for its component-based architecture which allows you to create reusable UI elements, making complex web applications easier to manage and maintain. React is used to build single-page applications.</p>
+               <p>React Tutorial Prerequisites</p>
+               <p>HTML</p>
+               <p>CSS</p>
+               <p>JavaScript</p>      
+            </section>
+            <section id="Comonents">
+                <h2>Comonents</h2>
+                <p>Components are bits of code that are freelance and reusable. They serve a similar purpose as JavaScript functions. However, work isolation and returns HTML via a render function.
+                    A Component is one of the core building blocks of React. In other words, we can say that every application you will develop in React will be made up of pieces called components. Components make the task of building UIs much easier. You can see a UI broken down into multiple individual pieces called components and work on them independently and merge them all in a parent component which will be your final UI.
+                    Components in React basically return a piece of JSX code which tells what should be rendered on the screen. In React, we mainly have two types of components:
+                	Functional Components: Functional components are simply JavaScript functions. We can create a functional component to React by writing a JavaScript function. These functions may or may not receive data as parameters, we will discuss this later in the tutorial. Below example shows a valid functional component in React:
+                  Class Components: The class components are a little more complex than the functional components. The functional components are not aware of the other components in your program whereas the class components can work with each other. We can pass data from one class component to other class components. We can use JavaScript ES6 classes to create class-based components in React
+                </p>
+            </section>
+            <section id="State">
+                <h2>State</h2>
+                <p>The State is a way to store and manage the information or data while creating a React Application. The state is a JavaScript object that contains the real-time data or information on the webpage</p>
+            </section>
+            <!-- More sections -->
+            <section id="Props">
+                <h2>Props</h2>
+                <p>In React, components can receive information from a parent component by utilizing props (short for properties). A prop is an object accessible to all React components. It serves as a means to pass data from a parent component to a child component.
+                    <Welcome fullName = "Ashish Bhardwaj" />
+                    In the provided code, the prop `fullName` is passed with the value “Ashish Bhardwaj” to the `Welcome` component, and accessing this prop is demonstrated succinctly.
+                    props = { fullName: "Ashish Bhardwaj" }
+                    In case of functional components, we can access a prop value as shown below.
+                    props.propName;
+                    </p>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
